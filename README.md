@@ -2,7 +2,7 @@ Building a basic game to learn more about javascript and application development
 
 to do:
 
-Prevent sprite from moving off screen - old school wraparound 
+~~Prevent sprite from moving off screen - old school wraparound~~
 Make canvas size responsive
 make squares into pixelated circles 
 put a food on the screen randomly

@@ -10,13 +10,26 @@ function drawFrame() {
     ctx.fillStyle = "white"
     ctx.fillRect(0,0,canvas.width,canvas.height)
     ctx.fillStyle = "black";
+
+    if (player.x > canvas.width) {
+        player.x %= canvas.width
+    }
+    if (player.x < 0) {
+        player.x += canvas.width
+    }
+    if (player.y > canvas.height) {
+        player.y %= canvas.height
+    }
+    if (player.y < 0) {
+        player.y += canvas.height
+    }
     ctx.fillRect(player.x,player.y,50,50);
 }
 
 const player = {
     x: 10,
     y: 10,
-    movespeed: 10,
+    movespeed: 4,
 }
 
 window.addEventListener("keydown", onKeyDown, false);
@@ -37,16 +50,16 @@ function onKeyUp(event) {
 setInterval(main, 33);
 
 function main() {
-    if (keysPressed.w){
+    if (keysPressed.w) {
         player.y -= player.movespeed
     }
-    if (keysPressed.a){
+    if (keysPressed.a) {
         player.x -= player.movespeed
     }
-    if (keysPressed.s){
+    if (keysPressed.s) {
         player.y += player.movespeed
     }
-    if (keysPressed.d){
+    if (keysPressed.d) {
         player.x += player.movespeed
     }
     drawFrame()
