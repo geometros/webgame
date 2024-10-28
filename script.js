@@ -3,33 +3,49 @@ const canvas = document.getElementById("main");
 const ctx = canvas.getContext("2d");
 canvas.width = 500;
 canvas.height = 500;
-ctx.fillStyle = "white"
-ctx.fillRect(0,0,canvas.width,canvas.height)
+ctx.fillStyle = "#9FD9E3";
+ctx.rect(0,0,canvas.width,canvas.height)
+ctx.fill();
+var spriteSheetLoc = "./pixel_boat_scaled_5x.png"
+var image = new Image()
+image.src = spriteSheetLoc;
+
+const BOAT_SIZE = 32*5
 
 function drawFrame() {
-    ctx.fillStyle = "white"
-    ctx.fillRect(0,0,canvas.width,canvas.height)
-    ctx.fillStyle = "black";
 
-    if (player.x > canvas.width) {
+    ctx.fill();
+
+    if (player.x > canvas.width - BOAT_SIZE) {
         player.x %= canvas.width
     }
-    if (player.x < 0) {
+    if (player.x < - BOAT_SIZE) {
         player.x += canvas.width
     }
-    if (player.y > canvas.height) {
+    if (player.y > canvas.height - BOAT_SIZE) {
         player.y %= canvas.height
     }
-    if (player.y < 0) {
+    if (player.y < - BOAT_SIZE) {
         player.y += canvas.height
     }
-    ctx.fillRect(player.x,player.y,50,50);
+
+    ctx.drawImage(
+        image,
+        0,
+        0,
+        BOAT_SIZE,
+        BOAT_SIZE,
+        player.x,
+        player.y,
+        BOAT_SIZE,
+        BOAT_SIZE,
+    ) 
 }
 
 const player = {
     x: 10,
     y: 10,
-    movespeed: 4,
+    movespeed: 5,
 }
 
 window.addEventListener("keydown", onKeyDown, false);

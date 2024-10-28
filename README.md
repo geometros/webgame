@@ -2,11 +2,10 @@ Building a basic game to learn more about javascript and application development
 
 to do:
 
-~~Prevent sprite from moving off screen - old school wraparound~~
-Make canvas size responsive
-make squares into pixelated circles 
-put a food on the screen randomly
-get character to eat the food
-make character grow when it eats the food
-get this online
-set up websocket server to allow multiplayer
+*~~Prevent sprite from moving off screen - old school wraparound~~
+*~~make the sprite something more interesting like a boat~~
+*Make the boat sprite face direction of motion
+*Fix boat jumping too far onto screen when wrapping around
+*Make canvas size responsive
+*get this online
+*set up websocket server to allow multiplayer
