@@ -19,16 +19,17 @@ function drawFrame() {
 
     ctx.fill();
 
-    if (player.x > canvas.width - BOAT_SIZE) {
+    if (player.x > canvas.width) {
         player.x %= canvas.width
+        player.x -= BOAT_SIZE / 2
     }
-    if (player.x < - BOAT_SIZE) {
+    if (player.x < - BOAT_SIZE / 2) {
         player.x += canvas.width
     }
     if (player.y > canvas.height - BOAT_SIZE) {
         player.y %= canvas.height
     }
-    if (player.y < - BOAT_SIZE) {
+    if (player.y < - BOAT_SIZE / 2) {
         player.y += canvas.height
     }
     
