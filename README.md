@@ -8,9 +8,10 @@ to do:
 *~~Fix boat jumping too far onto screen when wrapping around~~
 *Make game loop use requestAnimationFrame instead of just a timer
 *Add cannons
-*Add a sea serpent to shoot at
+*~~Add a sea serpent~~
 *Remove hardcoded pixel values for wrapping sprite at edges
 *Make canvas size responsive
 *~~get this online~~
 *set up websocket server to allow multiplayer
+*music?
 *~~fix sprite jumping around screen when direction changes~~

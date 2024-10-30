@@ -6,14 +6,37 @@ canvas.height = 500;
 ctx.fillStyle = "#008FA6";
 ctx.rect(0,0,canvas.width,canvas.height)
 ctx.fill();
-let spriteSheetLoc = "./pixel_boat_scaled_5x_v2.png"
-let image = new Image()
-image.src = spriteSheetLoc;
 
+let playerImage = new Image()
+playerImage.src = "./pixel_boat_scaled_5x_v2.png";
 const BOAT_SIZE = 32*5
 
 let sourceX = 0;
 let sourceY = 0;
+
+let beastImage = new Image()
+beastImage.src = "./creatures_scaled_5x.png"
+
+const player = {
+    x: 10,
+    y: 10,
+    direction: 0,
+    movespeed: 3,
+}
+
+const beast = {
+    x: null,
+    y: null,
+    alive: 0,
+    spawn() {
+        this.x = Math.random() * canvas.width
+        this.y = Math.random() * canvas.height
+    },
+    despawn() {
+        this.x = null
+        this.y = null
+    },
+}
 
 function debug(){
     ctx.fillStyle = "black"
@@ -22,12 +45,27 @@ function debug(){
     ctx.fillText(`y: ${player.y}`, 20,40)
 }
 
+function wrangleEntities() {
+    if (beast.x == null){
+        beast.spawn()
+    }
+    else if (beast.alive > 500){
+        beast.despawn()
+        beast.alive = 0;
+    }
+    else {
+        beast.alive++
+    }
+}
+
 function drawFrame() {
 
     ctx.fillStyle = "#9FD9E3";
     ctx.fill();
 
     debug()
+
+    wrangleEntities()
 
     if (player.x > 455) {
         player.x = -105 
@@ -62,7 +100,7 @@ function drawFrame() {
     }
 
     ctx.drawImage(
-        image,
+        playerImage,
         sourceX,
         sourceY,
         BOAT_SIZE,
@@ -71,14 +109,15 @@ function drawFrame() {
         player.y,
         BOAT_SIZE,
         BOAT_SIZE,
-    ) 
-}
+    )
 
-const player = {
-    x: 10,
-    y: 10,
-    movespeed: 5,
-    direction: 0,
+    if (beast.x != null) {
+        ctx.drawImage(
+            beastImage,
+            beast.x,
+            beast.y,
+        )
+    }
 }
 
 window.addEventListener("keydown", onKeyDown, false);
