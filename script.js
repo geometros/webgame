@@ -3,10 +3,10 @@ const canvas = document.getElementById("main");
 const ctx = canvas.getContext("2d");
 canvas.width = 500;
 canvas.height = 500;
-ctx.fillStyle = "#9FD9E3";
+ctx.fillStyle = "#008FA6";
 ctx.rect(0,0,canvas.width,canvas.height)
 ctx.fill();
-let spriteSheetLoc = "./pixel_boat_scaled_5x.png"
+let spriteSheetLoc = "./pixel_boat_scaled_5x_v2.png"
 let image = new Image()
 image.src = spriteSheetLoc;
 
@@ -42,7 +42,7 @@ function drawFrame() {
         player.y = 476
     }
     
-    switch(player.direction) {
+    switch(player.direction) { //wasd
         case 0:
             sourceX = 0;
             sourceY = 0;

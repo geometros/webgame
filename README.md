@@ -13,4 +13,4 @@ to do:
 *Make canvas size responsive
 *~~get this online~~
 *set up websocket server to allow multiplayer
-*fix sprite jumping around screen when direction changes
+*~~fix sprite jumping around screen when direction changes~~
