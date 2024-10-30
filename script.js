@@ -135,24 +135,25 @@ function onKeyUp(event) {
     }
 }
 
-setInterval(main, 33);
-
 function main() {
+    window.requestAnimationFrame(main);
     if (keysPressed.w) {
-        player.y -= player.movespeed
-        player.direction = 0        
+        player.y -= player.movespeed;
+        player.direction = 0;
     }
     if (keysPressed.a) {
-        player.x -= player.movespeed
-        player.direction = 1
+        player.x -= player.movespeed;
+        player.direction = 1;
     }
     if (keysPressed.s) {
-        player.y += player.movespeed
-        player.direction = 2
+        player.y += player.movespeed;
+        player.direction = 2;
     }
     if (keysPressed.d) {
-        player.x += player.movespeed
-        player.direction = 3
+        player.x += player.movespeed;
+        player.direction = 3;
     }
-    drawFrame()
+    drawFrame();
 }
+
+main();
