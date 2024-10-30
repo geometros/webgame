@@ -30,8 +30,8 @@ const beast = {
     y: null,
     alive: 0,
     spawn() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.floor(Math.random() * canvas.width)
+        this.y = Math.floor(Math.random() * canvas.height)
     },
     despawn() {
         this.x = null
