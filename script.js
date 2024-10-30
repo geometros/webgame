@@ -3,7 +3,8 @@ const canvas = document.getElementById("main");
 const ctx = canvas.getContext("2d");
 canvas.width = 500;
 canvas.height = 500;
-ctx.fillStyle = "#008FA6";
+const oceanColor = "#9FD9E3"
+ctx.fillStyle = oceanColor;
 ctx.rect(0,0,canvas.width,canvas.height)
 ctx.fill();
 
@@ -41,8 +42,21 @@ const beast = {
 function debug(){
     ctx.fillStyle = "black"
     ctx.font = "14px sans serif";
-    ctx.fillText(`x: ${player.x}`, 20,20)
-    ctx.fillText(`y: ${player.y}`, 20,40)
+    ctx.fillText(`x: ${player.x}`, 10,20)
+    ctx.fillText(`y: ${player.y}`, 10,40)
+    ctx.fillText("beast", 10, 60)
+    ctx.fillText(`x: ${beast.x}`,10,80)
+    ctx.fillText(`y: ${beast.y}`,10,100)
+    ctx.fillStyle = "red"
+    ctx.beginPath();
+    ctx.arc(player.x,player.y,2,0,2*Math.PI)
+    ctx.stroke();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(beast.x,beast.y,2,0,2*Math.PI)
+    ctx.stroke();
+    ctx.fill();
+
 }
 
 function wrangleEntities() {
@@ -60,10 +74,9 @@ function wrangleEntities() {
 
 function drawFrame() {
 
-    ctx.fillStyle = "#9FD9E3";
+    ctx.fillStyle = oceanColor;
+    ctx.rect(0,0,canvas.width,canvas.height)
     ctx.fill();
-
-    debug()
 
     wrangleEntities()
 
@@ -118,6 +131,8 @@ function drawFrame() {
             beast.y,
         )
     }
+
+    debug()
 }
 
 window.addEventListener("keydown", onKeyDown, false);
