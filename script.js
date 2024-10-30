@@ -15,22 +15,31 @@ const BOAT_SIZE = 32*5
 let sourceX = 0;
 let sourceY = 0;
 
+function debug(){
+    ctx.fillStyle = "black"
+    ctx.font = "14px sans serif";
+    ctx.fillText(`x: ${player.x}`, 20,20)
+    ctx.fillText(`y: ${player.y}`, 20,40)
+}
+
 function drawFrame() {
 
+    ctx.fillStyle = "#9FD9E3";
     ctx.fill();
 
-    if (player.x > canvas.width) {
-        player.x %= canvas.width
-        player.x -= BOAT_SIZE / 2
+    debug()
+
+    if (player.x > 455) {
+        player.x = -105 
     }
-    if (player.x < - BOAT_SIZE / 2) {
-        player.x += canvas.width
+    if (player.x < -105) {
+        player.x = 446 
     }
-    if (player.y > canvas.height - BOAT_SIZE) {
-        player.y %= canvas.height
+    if (player.y > 485) {
+        player.y = -80
     }
-    if (player.y < - BOAT_SIZE / 2) {
-        player.y += canvas.height
+    if (player.y < - 90) {
+        player.y = 476
     }
     
     switch(player.direction) {
