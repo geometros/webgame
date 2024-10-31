@@ -55,18 +55,19 @@ const cannonball = {
 const beast = {
     x: null,
     y: null,
-    alive: 0,
-    spawnRate: 500,
+    clock: 0,
+    despawnRate: 500,
+    resurfaceRate: 50,
     spawn() {
         this.x = Math.floor(Math.random() * (canvas.width - 100))
         this.y = Math.floor(Math.random() * (canvas.height - 100))
+        this.clock = 0;
     },
     despawn() {
         this.x = null;
         this.y = null;
-        beast.alive = 0;
+        this.clock = 0;
     },
-    kill() {}
 }
 
 function debug(){
@@ -89,18 +90,23 @@ function debug(){
     ctx.stroke();
     ctx.fill();
 
-    //beast.spawnRate = 10;
+    //beast.despawnRate = 10;
 }
 
 function wrangleEntities() { //handle collisions, spawning, kills here
     if (beast.x == null){
-        beast.spawn();
+        if (beast.clock > beast.resurfaceRate){
+            beast.spawn();
+        }
+        else {
+            beast.clock++;
+        }
     }
-    else if (beast.alive > beast.spawnRate){
+    else if (beast.clock > beast.despawnRate){
         beast.despawn();
     }
     else {
-        beast.alive++;
+        beast.clock++;
     }
 
     if (cannonball.x){
