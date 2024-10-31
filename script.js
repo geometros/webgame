@@ -8,6 +8,8 @@ ctx.fillStyle = oceanColor;
 ctx.rect(0,0,canvas.width,canvas.height)
 ctx.fill();
 
+let gameClock = 0;
+
 let playerImage = new Image()
 playerImage.src = "./pixel_boat_scaled_5x_v2.png";
 const BOAT_SIZE = 32*5
@@ -23,12 +25,38 @@ const player = {
     y: 10,
     direction: 'w',
     movespeed: 3,
+    fire: false,
+    timeFired: -500,
+    cooldown: 100,
+}
+
+const cannonball = {
+    x: null,
+    y: null,
+    direction: null,
+    speed: 5,
+    next() {
+        if (this.direction == 'w'){this.y -= this.speed}
+        if (this.direction == 'a'){this.x -= this.speed}
+        if (this.direction == 's'){this.y += this.speed}
+        if (this.direction == 'd'){this.x += this.speed}
+        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.width + 10) {
+            this.kill()       
+        }
+    },
+    kill() {
+        this.x = null;
+        this.y = null;
+        this.direction = null;
+        player.fire = false;     
+    },
 }
 
 const beast = {
     x: null,
     y: null,
     alive: 0,
+    spawnRate: 500,
     spawn() {
         this.x = Math.floor(Math.random() * canvas.width)
         this.y = Math.floor(Math.random() * canvas.height)
@@ -47,6 +75,8 @@ function debug(){
     ctx.fillText("beast", 10, 60)
     ctx.fillText(`x: ${beast.x}`,10,80)
     ctx.fillText(`y: ${beast.y}`,10,100)
+    ctx.fillText(cannonball.x,10,120)
+
     ctx.fillStyle = "red"
     ctx.beginPath();
     ctx.arc(player.x,player.y,2,0,2*Math.PI)
@@ -56,19 +86,22 @@ function debug(){
     ctx.arc(beast.x,beast.y,2,0,2*Math.PI)
     ctx.stroke();
     ctx.fill();
-
 }
 
-function wrangleEntities() {
+function wrangleEntities() { //handle collisions, spawning, kills here
     if (beast.x == null){
         beast.spawn()
     }
-    else if (beast.alive > 500){
+    else if (beast.alive > beast.spawnRate){
         beast.despawn()
         beast.alive = 0;
     }
     else {
         beast.alive++
+    }
+
+    if (cannonball.x){
+        cannonball.next()
     }
 }
 
@@ -93,7 +126,7 @@ function drawFrame() {
         player.y = 476
     }
     
-    switch(player.direction) { //wasd
+    switch(player.direction) {
         case 'w':
             sourceX = 0;
             sourceY = 0;
@@ -132,6 +165,14 @@ function drawFrame() {
         )
     }
 
+    if (cannonball.x){
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(cannonball.x,cannonball.y,3,0,2*Math.PI)
+        ctx.stroke();
+        ctx.fill();
+    }
+
     debug()
 }
 
@@ -152,6 +193,9 @@ function onKeyUp(event) {
 
 function main() {
     window.requestAnimationFrame(main);
+    
+    gameClock++;
+
     if (keysPressed.w) {
         player.y -= player.movespeed;
         player.direction = 'w';
@@ -169,7 +213,13 @@ function main() {
         player.direction = 'd';
     }
     if (keysPressed[' ']) {
-        //pass
+        if (gameClock > player.timeFired + player.cooldown && player.fire == false) {
+            player.fire = true;
+            player.timeFired = gameClock;
+            cannonball.x = player.x;
+            cannonball.y = player.y;
+            cannonball.direction = player.direction;
+        }
     }
     drawFrame();
 }
