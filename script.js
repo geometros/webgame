@@ -28,6 +28,7 @@ const player = {
     fire: false,
     timeFired: -500,
     cooldown: 100,
+    score: 0,
 }
 
 const cannonball = {
@@ -41,10 +42,10 @@ const cannonball = {
         if (this.direction == 's'){this.y += this.speed}
         if (this.direction == 'd'){this.x += this.speed}
         if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.width + 10) {
-            this.kill()       
+            this.despawn()       
         }
     },
-    kill() {
+    despawn() {
         this.x = null;
         this.y = null;
         this.direction = null;
@@ -62,54 +63,65 @@ const beast = {
         this.y = Math.floor(Math.random() * canvas.height)
     },
     despawn() {
-        this.x = null
-        this.y = null
+        this.x = null;
+        this.y = null;
     },
+    kill() {}
 }
 
 function debug(){
-    ctx.fillStyle = "black"
+    ctx.fillStyle = "black";
     ctx.font = "14px sans serif";
-    ctx.fillText(`x: ${player.x}`, 10,20)
-    ctx.fillText(`y: ${player.y}`, 10,40)
-    ctx.fillText("beast", 10, 60)
-    ctx.fillText(`x: ${beast.x}`,10,80)
-    ctx.fillText(`y: ${beast.y}`,10,100)
-    ctx.fillText(cannonball.x,10,120)
+    ctx.fillText(`x: ${player.x}`, 10,20);
+    ctx.fillText(`y: ${player.y}`, 10,40);
+    ctx.fillText("beast", 10, 60);
+    ctx.fillText(`x: ${beast.x}`,10,80);
+    ctx.fillText(`y: ${beast.y}`,10,100);
+    ctx.fillText(cannonball.x,10,120);
 
     ctx.fillStyle = "red"
     ctx.beginPath();
-    ctx.arc(player.x,player.y,2,0,2*Math.PI)
+    ctx.arc(player.x,player.y,2,0,2*Math.PI);
     ctx.stroke();
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(beast.x,beast.y,2,0,2*Math.PI)
+    ctx.arc(beast.x,beast.y,2,0,2*Math.PI);
     ctx.stroke();
     ctx.fill();
 }
 
 function wrangleEntities() { //handle collisions, spawning, kills here
     if (beast.x == null){
-        beast.spawn()
+        beast.spawn();
     }
     else if (beast.alive > beast.spawnRate){
-        beast.despawn()
+        beast.despawn();
         beast.alive = 0;
     }
     else {
-        beast.alive++
+        beast.alive++;
     }
 
     if (cannonball.x){
-        cannonball.next()
+        cannonball.next();
+    }
+
+    if ((beast.x + 20 < cannonball.x && beast.x + 140 > cannonball.x) && (beast.y + 45 < cannonball.y && beast.y + 105 > cannonball.y)) {
+        cannonball.despawn();
+        beast.despawn();
+        player.score++;
     }
 }
 
 function drawFrame() {
 
     ctx.fillStyle = oceanColor;
-    ctx.rect(0,0,canvas.width,canvas.height)
+    ctx.rect(0,0,canvas.width,canvas.height);
     ctx.fill();
+
+    ctx.fillStyle = "green";
+    ctx.font = "24px sans serif";
+    ctx.fillText(`SCORE: ${player.score}`,(canvas.width / 2) - 50,30);
 
     wrangleEntities()
 
