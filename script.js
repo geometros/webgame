@@ -58,12 +58,13 @@ const beast = {
     alive: 0,
     spawnRate: 500,
     spawn() {
-        this.x = Math.floor(Math.random() * canvas.width)
-        this.y = Math.floor(Math.random() * canvas.height)
+        this.x = Math.floor(Math.random() * (canvas.width - 100))
+        this.y = Math.floor(Math.random() * (canvas.height - 100))
     },
     despawn() {
         this.x = null;
         this.y = null;
+        beast.alive = 0;
     },
     kill() {}
 }
@@ -87,6 +88,8 @@ function debug(){
     ctx.arc(beast.x,beast.y,2,0,2*Math.PI);
     ctx.stroke();
     ctx.fill();
+
+    //beast.spawnRate = 10;
 }
 
 function wrangleEntities() { //handle collisions, spawning, kills here
@@ -95,7 +98,6 @@ function wrangleEntities() { //handle collisions, spawning, kills here
     }
     else if (beast.alive > beast.spawnRate){
         beast.despawn();
-        beast.alive = 0;
     }
     else {
         beast.alive++;
