@@ -21,7 +21,7 @@ beastImage.src = "./creatures_scaled_5x.png"
 const player = {
     x: 10,
     y: 10,
-    direction: 0,
+    direction: 'w',
     movespeed: 3,
 }
 
@@ -94,19 +94,19 @@ function drawFrame() {
     }
     
     switch(player.direction) { //wasd
-        case 0:
+        case 'w':
             sourceX = 0;
             sourceY = 0;
             break;
-        case 1:
+        case 'a':
             sourceX = BOAT_SIZE + 1;
             sourceY = BOAT_SIZE + 1;
             break;
-        case 2:
+        case 's':
             sourceX = 0;
             sourceY = BOAT_SIZE + 1;
             break;
-        case 3:
+        case 'd':
             sourceX = BOAT_SIZE + 1;
             sourceY = 0;
             break;
@@ -154,19 +154,22 @@ function main() {
     window.requestAnimationFrame(main);
     if (keysPressed.w) {
         player.y -= player.movespeed;
-        player.direction = 0;
+        player.direction = 'w';
     }
     if (keysPressed.a) {
         player.x -= player.movespeed;
-        player.direction = 1;
+        player.direction = 'a';
     }
     if (keysPressed.s) {
         player.y += player.movespeed;
-        player.direction = 2;
+        player.direction = 's';
     }
     if (keysPressed.d) {
         player.x += player.movespeed;
-        player.direction = 3;
+        player.direction = 'd';
+    }
+    if (keysPressed[' ']) {
+        //pass
     }
     drawFrame();
 }
